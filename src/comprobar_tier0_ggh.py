@@ -33,13 +33,21 @@ def comprobar_todos_los_csv(directorio_data):
 
         # 3. Validar contra la solución oficial del CSV
         solucion_esperada = instancia['solucion']
-        es_correcto = np.array_equal(punto_calculado, solucion_esperada)
+        target = instancia['target']
 
-        if es_correcto:
-            correctos += 1
-            estado = "✅ CORRECTO"
+        # Norma del ruido del criptograma (distancia al objetivo)
+        norma_ruido = np.linalg.norm(target - punto_calculado)
+
+        if solucion_esperada is not None:
+            es_correcto = np.array_equal(punto_calculado, solucion_esperada)
+            if es_correcto:
+                correctos += 1
+                estado = f"✅ CORRECTO (||c - v|| = {norma_ruido:.4f})"
+            else:
+                norma_diff = np.linalg.norm(punto_calculado - solucion_esperada)
+                estado = f"❌ ERROR (distancia a solución = {norma_diff:.4f})"
         else:
-            estado = "❌ ERROR"
+            estado = f"❓ N/D (||c - v|| = {norma_ruido:.4f})"
 
         # 4. Mostrar traza en consola
         print(f"📄 Fichero:   {nombre}")
