@@ -109,7 +109,11 @@ def cargar_instancia_lwe(filepath):
 
         elif line.startswith('#') and "Criptograma" in line:
             i += 1
-            instancia['criptograma'] = lines[i]
+            # Saltamos sub-comentarios descriptivos bajo la cabecera
+            while i < len(lines) and lines[i].startswith('#'):
+                i += 1
+            if i < len(lines):
+                instancia['criptograma'] = lines[i]
 
         elif line.startswith('#') and "Dimensi" in line:
             i += 1
