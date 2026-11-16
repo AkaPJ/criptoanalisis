@@ -246,17 +246,39 @@ LWE Tier 2 & Rotura / Cripto (4 inst.) & $n \in [4, 7], q \in \{463, 541\}$ & At
 
 Se incluyen dos trazas representativas obtenidas durante la ejecución que muestran los valores intermedios de reducción de bases y recuperación del vector de error:
 
-\begin{verbatim}
-[GGH Tier 3 - CVP Dim 15] -> M_kannan = 14 | Matriz reducida LLL: 16x16
-  Fila candidata (e, M): [ 1 -2  0  1 -1 -2  1  0 -1  2 -1  1 -2  0  1 14]
-  Punto v = c + e:       [-74 33 2 -74 114 165 52 -234 -155 30 -14 103 117 37 103]
-  Validacion:            v * B_inv entero = True | ||c - v|| = 4.6904 (VALIDO)
 
-[LWE Tier 1 - Rotura n=3, m=12, q=281] -> Matriz aumentada B_LWE: 16x16
-  Fila corta LLL (e, -s, 1): [1 -2 0 -1 2 1 0 -1 1 -2 1 0 | -142 -89 -215 | 1]
-  Secreto recuperado s mod 281: [142, 89, 215]
-  Validacion:            max|e| = 2 <= 5 | ||e|| = 4.1231 (VALIDO)
+\begin{verbatim}
+[GGH Tier 2 - CVP]
+Fichero: Tier02T04_Latt.txt
+Dimension: n = 7
+Algoritmo: LLL (delta=0.99) + Nearest Plane
+
+Tiempo: 2.39 ms
+
+Vector recuperado:
+[3842 1730 873 1461 833 3106 1477]
+
+Validacion:
+  Pertenencia a la celosia: True
+  ||c - v|| = 3.4641
+  Estado: VALIDO
 \end{verbatim}
+
+\begin{verbatim}
+[GGH Tier 3 - CVP]
+Instancia: Tier03T03_Latt.txt
+Dimension: 15
+Tiempo: 37.29 ms
+
+Vector obtenido:
+[-75 35 2 -76 116 166 52 -233
+ -154 28 -12 101 119 36 102]
+
+Pertenencia al reticulo: True
+Distancia ||c-v||: 2.8284
+\end{verbatim}
+
+
 
 % =========================================================================
 % 4. CONCLUSIONES (15%)

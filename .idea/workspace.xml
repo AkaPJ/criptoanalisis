@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="29e4151b-7d28-4843-9e32-f0ad3f1e0d7a" name="Changes" comment="documentación">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/main.aux" beforeDir="false" afterPath="$PROJECT_DIR$/docs/main.aux" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/main.fdb_latexmk" beforeDir="false" afterPath="$PROJECT_DIR$/docs/main.fdb_latexmk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/main.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/main.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/main.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/docs/main.synctex.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/main.tex" beforeDir="false" afterPath="$PROJECT_DIR$/docs/main.tex" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -127,7 +130,7 @@
       <workItem from="1793716734907" duration="8788000" />
       <workItem from="1793952880087" duration="639000" />
       <workItem from="1794426049140" duration="7488000" />
-      <workItem from="1794813815046" duration="6189000" />
+      <workItem from="1794813815046" duration="7254000" />
     </task>
     <task id="LOCAL-00001" summary="tier 0 ggh">
       <option name="closed" value="true" />
@@ -244,11 +247,11 @@
     <SUITE FILE_PATH="coverage/criptoanalisis$solver_lwe_lll.coverage" NAME="solver_lwe_lll Coverage Results" MODIFIED="1794840864091" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/lwe" />
     <SUITE FILE_PATH="coverage/criptoanalisis$comprobar_tier0.coverage" NAME="comprobar_tier0 Coverage Results" MODIFIED="1793720688851" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/criptoanalisis$tier1_solver.coverage" NAME="tier1_solver Coverage Results" MODIFIED="1794469713342" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ggh" />
-    <SUITE FILE_PATH="coverage/criptoanalisis$comprobar_tier2_ggh.coverage" NAME="comprobar_tier2_ggh Coverage Results" MODIFIED="1794843497796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/criptoanalisis$comprobar_tier2_ggh.coverage" NAME="comprobar_tier2_ggh Coverage Results" MODIFIED="1794846200589" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/criptoanalisis$comprobar_tier1_ggh.coverage" NAME="comprobar_tier1_ggh Coverage Results" MODIFIED="1794843387026" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/criptoanalisis$comprobar_tier0_ggh.coverage" NAME="comprobar_tier0_ggh Coverage Results" MODIFIED="1794813872380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/criptoanalisis$tier3_solver.coverage" NAME="tier3_solver Coverage Results" MODIFIED="1794472583780" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ggh" />
-    <SUITE FILE_PATH="coverage/criptoanalisis$comprobar_tier3_ggh.coverage" NAME="comprobar_tier3_ggh Coverage Results" MODIFIED="1794843576751" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/criptoanalisis$comprobar_tier3_ggh.coverage" NAME="comprobar_tier3_ggh Coverage Results" MODIFIED="1794846298997" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/criptoanalisis$comprobar_tier1_lwe.coverage" NAME="comprobar_tier1_lwe Coverage Results" MODIFIED="1794840572614" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>
