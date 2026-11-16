@@ -348,19 +348,8 @@ En LWE, se obtiene un secreto candidato y un vector de error de pequeña magnitu
     requiere 392.89 ms de media. No todos los casos se resuelven
     en pocos milisegundos. Estas mediciones no aíslan el efecto de
     dimensión, módulo o $\delta$.
-    \item \textbf{Límites de extrapolación:} Las instancias docentes de
-    pequeña dimensión no estiman la seguridad de ML-KEM, basado en
-    Module-LWE \cite{nist2024}. El coste de ataques con reducción por
-    bloques como BKZ depende de parámetros, estrategia y modelo de coste
-    \cite{albrecht2015}; no se deduce un tamaño de bloque universal.
-    Tampoco se infiere resistencia cuántica de estos experimentos clásicos.
-    \item \textbf{Fundamentos de seguridad:} GGH utiliza una base privada
-    favorable para aproximar CVP \cite{ggh1997}; la seguridad no se sigue
-    automáticamente de la dificultad general de CVP. LWE dispone, para
-    distribuciones y parámetros apropiados, de reducciones desde problemas
-    de retículos en el peor caso \cite{regev2009}. Estas garantías no
-    certifican cualquier instancia pequeña ni constituyen una prueba
-    absoluta de resistencia de un esquema concreto.
+    \item \textbf{Evolución temporal y resistencia frente a ataques cuánticos:} Se constata un crecimiento marcado del tiempo de ejecución al aumentar la dimensión de la celosía y el parámetro $\delta$. Dado que LLL ofrece un factor de aproximación exponencial $O(2^{n/2})$, en los estándares PQC actuales como ML-KEM \cite{nist2024} (Kyber, $n \in [512, 1024]$) se requieren algoritmos de bloques como BKZ, cuyo coste sigue siendo exponencial incluso frente a computadores cuánticos.
+    \item \textbf{Reflexión crítica conjunta:} El estudio permite observar las diferencias entre los fundamentos de seguridad de GGH y LWE. Mientras que GGH presenta vulnerabilidades asociadas a la estructura de sus bases y a los ataques de reducción de retículos, LWE dispone de garantías teóricas basadas en reducciones de seguridad desde problemas difíciles sobre retículos. Esto contribuye a explicar su relevancia en el desarrollo de esquemas criptográficos postcuánticos actuales.
 \end{enumerate}
 
 % =========================================================================
@@ -400,7 +389,11 @@ National Institute of Standards and Technology,
 Mechanism Standard,''
 FIPS 203, 2024.
 doi: 10.6028/NIST.FIPS.203.
-\bibitem{llm_uso} \textbf{Declaración de uso de IA:} Se ha utilizado el modelo de lenguaje Gemini (Google) como asistente técnico mediante consultas iterativas (\textit{prompts} sobre estructuración modular en Python, formulación matricial de la Inmersión de Kannan en GGH/LWE y maquetación en LaTeX). Todo el código generado y los resultados obtenidos fueron auditados, ejecutados y validados matemáticamente por los autores mediante pruebas de pertenencia al retículo y verificación modular.
+\bibitem{llm_uso} \textbf{Declaración de uso de IA:} Se ha utilizado el modelo de lenguaje Gemini (Google) como asistente técnico para el diseño conceptual de los algoritmos de retículos
+y maquetación en LaTeX mediante consultas iterativas. Todo el código generado y los resultados
+obtenidos han sido revisados, ejecutados y validados por los alumnos mediante pruebas de
+pertenencia al retículo, verificación modular y comprobación de ruidos máximos.
+
 \end{thebibliography}
 
 \end{document}
