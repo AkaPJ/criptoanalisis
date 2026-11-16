@@ -6,18 +6,8 @@ from utils.loader import cargar_instancia_ggh
 from ggh.tier2_solver import resolver_ggh_tier2
 
 
-def verificar_pertenencia_celosia(punto, base_publica):
-    """
-    Verifica si un punto v pertenece a la celosía L(B').
-    Un punto v in L si v * (B')^-1 produce coeficientes enteros exactos.
-    """
-    try:
-        b_inv = np.linalg.inv(base_publica)
-        coords = np.dot(punto, b_inv)
-        es_entero = np.allclose(coords, np.round(coords), atol=1e-4)
-        return es_entero, coords
-    except np.linalg.LinAlgError:
-        return False, None
+from utils.validacion_exacta import (verificar_pertenencia_celosia,
+                                      verificar_base_reducida)
 
 
 def comprobar_tier2():
@@ -61,6 +51,8 @@ def comprobar_tier2():
             tipo_problema=problema
         )
         t_total = (time.time() - t_inicio) * 1000  # milisegundos
+
+        assert verificar_base_reducida(base_pub, B_red, instancia.get("modulo")), "LLL cambió el retículo"
 
         solucion_esperada = instancia['solucion']
 

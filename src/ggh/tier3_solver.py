@@ -61,7 +61,7 @@ def lll_reduction_modular(B, delta=0.99):
     return np.array(filas_no_nulas)
 
 
-def kannan_embedding_cvp(target, B_red):
+def kannan_embedding_cvp(target, B_red, trace=None):
     """
     Resuelve CVP transformándolo en SVP de dimensión (n+1) mediante
     la Inmersión de Kannan (Kannan's Embedding).
@@ -80,6 +80,9 @@ def kannan_embedding_cvp(target, B_red):
 
     # Reducir la celosía aumentada con LLL (delta=0.99)
     B_kannan_red = lll_reduction_modular(B_kannan, delta=0.99)
+
+    if trace is not None:
+        trace.update(embedding_shape=list(B_kannan.shape), M=M, short_rows=B_kannan_red.tolist(), strategy="Kannan")
 
     mejor_punto = None
     menor_error = np.inf
@@ -102,7 +105,7 @@ def kannan_embedding_cvp(target, B_red):
     return mejor_punto
 
 
-def resolver_ggh_tier3(target, base_publica, tipo_problema="CVP", modulo=None):
+def resolver_ggh_tier3(target, base_publica, tipo_problema="CVP", modulo=None, trace=None):
     """
     Resolvedor completo para Tier 3:
     Soporta celosías estándar y celosías modulares (q-ary lattices).
@@ -119,6 +122,9 @@ def resolver_ggh_tier3(target, base_publica, tipo_problema="CVP", modulo=None):
     # Reducción LLL (elimina automáticamente las dependencias lineales de q * I)
     B_red = lll_reduction_modular(base_trabajo, delta=0.99)
 
+    if trace is not None:
+        trace.update(original_shape=list(base_publica.shape), generators_shape=list(base_trabajo.shape), reduced_shape=list(B_red.shape))
+
     # Caso SVP: Vector no nulo de menor norma en la base reducida
     if "SVP" in tipo_problema.upper() or np.all(target == 0):
         normas = np.linalg.norm(B_red, axis=1)
@@ -126,10 +132,12 @@ def resolver_ggh_tier3(target, base_publica, tipo_problema="CVP", modulo=None):
         return B_red[idx_min].astype(int), B_red
 
     # Caso CVP: Kannan's Embedding sobre la base ya reducida
-    punto_kannan = kannan_embedding_cvp(target, B_red)
+    punto_kannan = kannan_embedding_cvp(target, B_red, trace=trace)
     if punto_kannan is not None:
         return punto_kannan, B_red
 
     # Fallback: Babai's Nearest Plane si Kannan no encuentra la fila exacta
+    if trace is not None:
+        trace["strategy"] = "Babai fallback"
     punto_babai, _ = babai_nearest_plane(target, B_red)
     return punto_babai, B_red

@@ -24,7 +24,7 @@
 \titlespacing*{\subsection}{0pt}{6pt}{2pt}
 
 \title{\vspace{-1.4cm}\textbf{Memoria de Criptoanálisis de Criptografía Post-Cuántica}}
-\author{Jordi Martí y Óscar Seguí \\ \normalsize Máster Universitario en Ciberseguridad y Ciberinteligencia (MUCC) -- UPV}
+\author{Jordi Martí y Óscar Seguí}
 \date{\vspace{-0.4cm}Noviembre 2026}
 
 \begin{document}
@@ -37,7 +37,7 @@
 % =========================================================================
 \section{Introducción}
 
-La seguridad de los sistemas criptográficos de clave pública desplegados en la actualidad, como RSA o la criptografía de curva elíptica (ECC), se apoya en la intratabilidad computacional de la factorización de enteros y el logaritmo discreto. Sin embargo, el algoritmo de Shor permite resolver ambos problemas en tiempo polinómico con un computador cuántico lo suficientemente grande, comprometiendo la confidencialidad y la integridad de las comunicaciones actuales. Ante esta tesitura, la criptografía post-cuántica (PQC) nace con la idea de construir primitivas resistentes tanto a ataques clásicos como cuánticos, destacando las familias basadas en retículos (\textit{lattices}) por su eficiencia y sólidas reducciones de seguridad en el peor caso \cite{regev2009}.
+La seguridad de los sistemas criptográficos de clave pública desplegados en la actualidad, como RSA o la criptografía de curva elíptica (ECC), se apoya en la intratabilidad computacional de la factorización de enteros y el logaritmo discreto. Sin embargo, el algoritmo de Shor permite resolver ambos problemas en tiempo polinómico con un computador cuántico lo suficientemente grande, comprometiendo la confidencialidad y la integridad de las comunicaciones actuales. Ante esta tesitura, la criptografía post-cuántica (PQC) nace con la idea de construir primitivas resistentes tanto a ataques clásicos como cuánticos, destacando las familias basadas en retículos (\textit{lattices}) por su eficiencia y, en construcciones concretas y bajo hipótesis precisas, sus reducciones de seguridad desde problemas de retículos en el peor caso \cite{regev2009}.
 
 La finalidad de este trabajo es analizar, implementar y validar estrategias de criptoanálisis sobre instancias de dificultad creciente correspondientes a los esquemas \textbf{GGH} (\textit{Goldreich-Goldwasser-Halevi}) \cite{ggh1997} y \textbf{LWE} (\textit{Learning With Errors}) \cite{regev2009}.
 
@@ -198,48 +198,77 @@ La finalidad de este trabajo es analizar, implementar y validar estrategias de c
 
 Para validar las instancias cuya solución oficial consta como \texttt{N/D}, se implementó una comprobación matemática exacta: en GGH se verifica que $v \cdot (B_{\text{red}})^{-1} \in \mathbb{Z}^n$ (error $<10^{-4}$) y la minimalidad de $\|c - v\|$; en LWE se comprueba que el residuo centrado $e = (b - A \cdot s) \bmod q$ cumple $\|e\|_\infty \le 6$.
 
+
+
 \begin{table}[htbp]
 \centering
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.3}
-
-\begin{tabularx}{\textwidth}{
-    l
-    l
-    >{\centering\arraybackslash}X
-    X
-    r
-    r
-    X
-}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.6cm}r@{}}
 \toprule
-\textbf{Esquema / Nivel} &
-\textbf{Tipo} &
-\textbf{Talla / Mod} &
-\textbf{Algoritmo} &
-\textbf{Tiempo (ms)} &
-\textbf{Norma} &
-\textbf{Estado} \\
+\textbf{Esquema / nivel} & \textbf{Tipo} & \textbf{Dimensión / módulo} &
+\textbf{Algoritmo} & \shortstack{\textbf{Tiempo medio}\\\textbf{(ms)}} \\
 \midrule
-
-GGH Tier 1 & CVP / SVP (7 inst.) & $n \in [2, 6]$ & LLL ($\delta=0.75$) + Babai & 0.38 & 8.1314 & 7/7 Válido ($v \in \mathcal{L}$) \\
-
-GGH Tier 2 & CVP / SVP (5 inst.) & $n \in [4, 7]$ & LLL ($\delta=0.99$) + Nearest Plane & 1.62 & 12.9405 & 5/5 Válido ($v \in \mathcal{L}$) \\
-
-GGH Tier 3 (a) & CVP / SVP (2 inst.) & $n = 15$ / N/A & LLL ($\delta=0.99$) + Kannan & 34.94 & 9.3199 & 2/2 Válido ($v \in \mathcal{L}$) \\
-GGH Tier 3 (b) & CVP / SVP (3 inst.) & $n \in \{2, 5\}$ / $q \le 1987$ & LLL Modular ($B_{\text{aug}}$) & 7.88 & 0.3333 & 3/3 Válido ($v \in \mathcal{L}_q$) \\
-
+GGH Tier 1 & CVP/SVP\newline (7 inst.) & $n\in[2,6]$ &
+LLL ($\delta=0.75$) + Babai & 0.34 \\
+GGH Tier 2 & CVP/SVP\newline (5 inst.) & $n\in[4,7]$ &
+LLL ($\delta=0.99$) + Nearest Plane & 1.39 \\
+GGH Tier 3\newline ordinario & CVP/SVP\newline (2 inst.) & $n=15$ &
+LLL ($\delta=0.99$) + Kannan & 31.81 \\
+GGH Tier 3\newline modular & CVP/SVP\newline (3 inst.) & $n\in\{2,5\}$, $q\in\{113,541,1987\}$ &
+LLL modular + Kannan & 7.12 \\
 \midrule
-
-LWE Tier 1 & Rotura / Cripto (5 inst.) & $n \in [3, 4], q \in \{281, 379\}$ & Ataque Primal LLL ($\delta=0.99$) + Kannan & 17.50 & 7.5556 & 5/5 Válido ($\|e\|_\infty \le 4$) \\
-LWE Tier 2 & Rotura / Cripto (4 inst.) & $n \in [4, 7], q \in \{463, 541\}$ & Ataque Primal LLL ($\delta=0.99$) + Kannan & 81.18 & 14.6924 & 4/4 Válido ($\|e\|_\infty \le 6$) \\
-
+LWE Tier 1 & Rotura / cripto\newline (5 inst.) & $n\in[3,4]$, $q\in\{281,379\}$ &
+HNF + LLL ($\delta=0.99$) + Kannan & 12.28 \\
+LWE Tier 2 & Rotura / cripto\newline (5 inst.) & $n\in[4,10]$, $q\in\{463,541\}$ &
+HNF + LLL ($\delta=0.99$) + Kannan & 133.11 \\
 \bottomrule
 \end{tabularx}
-
-\caption{Métricas de ejecución, evolución temporal y validación matemática de las tareas resueltas.}
+\caption{Resultados experimentales. Tiempo medio por instancia. En GGH, Babai, Nearest Plane y Kannan se usan solo en CVP; en SVP se selecciona la fila reducida no nula de menor norma.}
 \label{tab:resultados}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\scriptsize
+\begin{tabularx}{\textwidth}{l l X}
+\toprule
+\textbf{Bloque} & \textbf{Instancia} & \textbf{Solución obtenida ($v \in \mathcal{L}$ en GGH; secreto $s$ y bit en LWE)} \\
+\midrule
+\textbf{GGH T1} & \texttt{Tier01T01} & $v = [36, 28, 30]$ \\
+ & \texttt{Tier01T02} & $v = [-4, 0, -1]$ \\
+ & \texttt{Tier01T03} & $v = [414, 152, 116, 537, 502, 185]$ \\
+ & \texttt{Tier01T04} & $v = [0, -2, -2, -15, -2]$ \\
+ & \texttt{Tier01T05} & $v = [-15, 1]$ \\
+ & \texttt{Tier01T06} & $v = [-15, 2]$ \\
+ & \texttt{Tier01T07} & $v = [38, -51, 84]$ \\
+\midrule
+\textbf{GGH T2} & \texttt{Tier02T01} & $v = [0, 1, 15, 2]$ \\
+ & \texttt{Tier02T02} & $v = [-1, 2, -1, -16, 1]$ \\
+ & \texttt{Tier02T03} & $v = [806, 996, 532, 1544, 153]$ \\
+ & \texttt{Tier02T04} & $v = [3842, 1730, 873, 1461, 833, 3106, 1477]$ \\
+ & \texttt{Tier02T05} & $v = [0, -1, 0, 2, -1, -1, 16]$ \\
+\midrule
+\textbf{GGH T3} & \texttt{Tier03T01} & $v = [98, 161]$ \\
+ & \texttt{Tier03T02} & $v = [92, 68]$ \\
+ & \texttt{Tier03T03} & $v = [-75, 35, 2, -76, 116, 166, 52, -233, -154, 28, -12, 101, 119, 36, 102]$ \\
+ & \texttt{Tier03T04} & $v = [1, 0, -15, 1, 1, -1, 0, 0, -2, 2, 0, -2, -1, 2, -2]$ \\
+ & \texttt{Tier03T05} & $v = [-1, 0, 0, 0, 0]$ \\
+\midrule
+\textbf{LWE T1} & \texttt{Tier1T01} & $s = [9, 162, 198]$ \\
+ & \texttt{Tier1T02} & $s = [270, 288, 152]$ \\
+ & \texttt{Tier1T03} & $s = [96, 73, 256] \rightarrow \text{Bit } \mathbf{0}$ \\
+ & \texttt{Tier1T04} & $s = [211, 132, 124] \rightarrow \text{Bit } \mathbf{0}$ \\
+ & \texttt{Tier1T05} & $s = [47, 82, 262, 161] \rightarrow \text{Bit } \mathbf{1}$ \\
+\midrule
+\textbf{LWE T2} & \texttt{Tier2T01} & $s = [172, 96, 358, 414]$ \\
+ & \texttt{Tier2T02} & $s = [283, 111, 15, 131, 443]$ \\
+ & \texttt{Tier2T03} & $s = [376, 467, 395, 215, 398] \rightarrow \text{Bit } \mathbf{0}$ \\
+ & \texttt{Tier2T04} & $s = [57, 262, 51, 86, 238, 73, 495] \rightarrow \text{Bit } \mathbf{0}$ \\
+\bottomrule
+\end{tabularx}
+\caption{Soluciones  obtenidas por bloque (GGH y LWE) e instancia.}
 \end{table}
 
 \subsection{Trazas Breves de Ejecución}
@@ -250,68 +279,56 @@ a GGH Tier 2, GGH Tier 3 y LWE Tier 2. Estas muestran
 los vectores recuperados, las métricas de validación y
 los tiempos de ejecución de los algoritmos empleados.
 
-
-\subsubsection*{GGH Tier 2: CVP mediante LLL y Nearest Plane}
-
+\par\medskip
+\noindent\begin{minipage}{\textwidth}
+\subsubsection*{GGH Tier 2: LLL y Nearest Plane}
 \begin{verbatim}
-[GGH Tier 2 - CVP]
-Fichero: Tier02T04_Latt.txt
-Dimension: n = 7
-Algoritmo: LLL (delta=0.99) + Nearest Plane
-
-Tiempo: 2.39 ms
-
-Vector recuperado:
-[3842 1730 873 1461 833 3106 1477]
-
-Validacion:
-  Pertenencia a la celosia: True
-  ||c - v|| = 3.4641
-  Estado: VALIDO
+Tier02T04_Latt.txt; base 7 x 7; delta=0.99
+Intermedio: norma de la primera fila
+  antes LLL: 1330.197730; despues: 16.217275
+NP, indices desde 0, primera proyeccion (i=6):
+  <r,b*_6>/||b*_6||^2 = -87.964058 -> -88
+Coeficientes finales (orden i=0,...,6):
+  [54 -117 -68 171 -35 209 -88]
+Resultado v = [3842 1730 873 1461 833 3106 1477]
+  d^2 = 12; d = 3.464102; pertenencia exacta: si
 \end{verbatim}
-\subsubsection*{GGH Tier 3: CVP mediante Kannan y LLL}
+\end{minipage}\par\medskip
 
+\par\medskip
+\noindent\begin{minipage}{\textwidth}
+\subsubsection*{GGH Tier 3: Kannan y LLL}
 \begin{verbatim}
-[GGH Tier 3 - CVP]
-Fichero: Tier03T03_Latt.txt
-Dimension: 15
-Algoritmo: Kannan + LLL
-Tiempo: 38.43 ms
-
-Vector recuperado:
-[-75 35 2 -76 116 166 52 -233
- -154 28 -12 101 119 36 102]
-
-Validacion:
-  Pertenencia a B_red: True
-  Distancia ||c-v||: 2.8284
-  Estado: PERTENENCIA VERIFICADA
+Tier03T03_Latt.txt; base 15 x 15, sin modulo
+Intermedio: aumentada 16 x 16; M=16; delta=0.99
+Fila corta w obtenida por LLL (ultima coord. = M):
+  [0 0 0 -1 1 -1 1 1 0 0 1 -1 0 -1 0 | 16]
+  ||w||^2 = 264; desplazamiento h = w[0:15]
+Recuperacion: v = c+h (no se uso el fallback)
+Resultado v = [-75 35 2 -76 116 166 52 -233
+              -154 28 -12 101 119 36 102]
+  d^2 = 8; d = 2.828427; pertenencia exacta: si
 \end{verbatim}
-\subsubsection*{LWE Tier 2: Recuperación del secreto mediante LLL}
+\end{minipage}\par\medskip
+
+\par\medskip
+\noindent\begin{minipage}{\textwidth}
+\subsubsection*{LWE Tier 2: ataque primal LLL y Kannan}
 \begin{verbatim}
-[LWE Tier 2 - LLL]
-Fichero: Tier2T05_LWE.txt
-Dimension: n=10, m=30, q=541
-Algoritmo: LLL + Embedding
-Tiempo ataque LLL: 0.4703 s
-
-Secreto candidato:
-[196 380 103 296 494 158 58 520 457 502]
-
-Vector de error:
-[-1 0 -3 1 2 -6 6 -6 6 0
- 3 0 0 -5 -6 -3 5 -5 -6 -2
- -5 -4 -3 -5 0 -4 -1 -2 -1 -4]
-
-Validacion:
-  |e| max: 6
-  ||e||^2: 441
-  Factor embedding: 1
-  Residuo cifrado: 237
-  Bit probable: 1
-
-Tiempo total: 0.4709 s
+Tier2T05_LWE.txt; n=10, m=30, q=541
+Intermedio: [A|qI] 30 x 40; HNF transpuesta 30 x 30
+  aumentada 31 x 31; M=1; delta=99/100
+Fila corta w de LLL (ultima coord. = +M):
+ [-1 0 -3 1 2 -6 6 -6 6 0 3 0 0 -5 -6
+  -3 5 -5 -6 -2 -5 -4 -3 -5 0 -4 -1 -2 -1 -4 | 1]
+Extraccion: e=w[0:30]; ||w||^2=442; ||e||^2=441
+Resolucion modular As=b-e (mod 541):
+ s=[196 380 103 296 494 158 58 520 457 502]
+Validacion: (As+e-b) mod 541 = 0 en 30/30 ecuaciones
+  residuo centrado = e; max|e_i|=6; ||e||=21
+  residuo del criptograma=237; bit candidato=1
 \end{verbatim}
+\end{minipage}\par\medskip
 Las ejecuciones muestran que los algoritmos obtienen vectores pertenecientes a los retículos considerados.
 En los casos de GGH, se calculan las distancias euclídeas entre los vectores recuperados y sus respectivos objetivos.
 En LWE, se obtiene un secreto candidato y un vector de error de pequeña magnitud, con una norma máxima de 6, que permite estimar el bit cifrado.
@@ -323,9 +340,27 @@ En LWE, se obtiene un secreto candidato y un vector de error de pequeña magnitu
 \section{Conclusiones}
 
 \begin{enumerate}
-    \item \textbf{Unificación mediante reducción de retículos:} Los resultados demuestran que la combinación de LLL ($\delta=0.99$) con la Inmersión de Kannan resuelve en pocos milisegundos tanto instancias de GGH (CVP y SVP modular) como de LWE (Tiers 1 y 2), evitando la explosión combinatoria de la fuerza bruta.
-    \item \textbf{Evolución temporal y resistencia frente a ataques cuánticos:} Se constata un crecimiento marcado del tiempo de ejecución al aumentar la dimensión de la celosía y el parámetro $\delta$. Dado que LLL ofrece un factor de aproximación exponencial $O(2^{n/2})$, en los estándares PQC actuales como ML-KEM \cite{nist2024} (Kyber, $n \in [512, 1024]$) se requieren algoritmos de bloques como BKZ con $\beta > 400$, cuyo coste sigue siendo exponencial incluso frente a computadores cuánticos.
-    \item \textbf{Reflexión crítica conjunta:} El estudio permite observar las diferencias entre los fundamentos de seguridad de GGH y LWE. Mientras que GGH presenta vulnerabilidades asociadas a la estructura de sus bases y a los ataques de reducción de retículos, LWE dispone de garantías teóricas basadas en reducciones de seguridad desde problemas difíciles sobre retículos. Esto contribuye a explicar su relevancia en el desarrollo de esquemas criptográficos postcuánticos actuales.
+    \item \textbf{Alcance experimental:} LLL, Babai y Kannan obtienen
+    candidatos pertenecientes a los retículos GGH estudiados; el motor
+    primal obtiene candidatos LWE compatibles con las cotas indicadas.
+    Los tiempos medios GGH están entre 0.34 y 31.81 ms por grupo;
+    en LWE T2 la media es 133.11 ms, y la instancia de $n=10,m=30$
+    requiere 392.89 ms de media. No todos los casos se resuelven
+    en pocos milisegundos. Estas mediciones no aíslan el efecto de
+    dimensión, módulo o $\delta$.
+    \item \textbf{Límites de extrapolación:} Las instancias docentes de
+    pequeña dimensión no estiman la seguridad de ML-KEM, basado en
+    Module-LWE \cite{nist2024}. El coste de ataques con reducción por
+    bloques como BKZ depende de parámetros, estrategia y modelo de coste
+    \cite{albrecht2015}; no se deduce un tamaño de bloque universal.
+    Tampoco se infiere resistencia cuántica de estos experimentos clásicos.
+    \item \textbf{Fundamentos de seguridad:} GGH utiliza una base privada
+    favorable para aproximar CVP \cite{ggh1997}; la seguridad no se sigue
+    automáticamente de la dificultad general de CVP. LWE dispone, para
+    distribuciones y parámetros apropiados, de reducciones desde problemas
+    de retículos en el peor caso \cite{regev2009}. Estas garantías no
+    certifican cualquier instancia pequeña ni constituyen una prueba
+    absoluta de resistencia de un esquema concreto.
 \end{enumerate}
 
 % =========================================================================

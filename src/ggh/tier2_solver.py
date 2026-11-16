@@ -49,7 +49,7 @@ def lll_reduction(B, delta=0.99):
     return np.round(B).astype(int)
 
 
-def babai_nearest_plane(target, B_red):
+def babai_nearest_plane(target, B_red, trace=None):
     """
     Algoritmo de Plano Mas Cercano de Babai (Nearest Plane)
     iterando secuencialmente sobre la base de Gram-Schmidt.
@@ -68,6 +68,8 @@ def babai_nearest_plane(target, B_red):
             c_i = np.round(np.dot(b_curr, B_star[i]) / denom)
         else:
             c_i = 0
+        if trace is not None:
+            trace.setdefault("projections", []).append({"i": i, "projection": float(np.dot(b_curr, B_star[i]) / denom) if denom > 1e-12 else None, "rounded": int(c_i)})
         c[i] = int(c_i)
         b_curr -= c_i * B_red[i]
 
@@ -76,12 +78,15 @@ def babai_nearest_plane(target, B_red):
     return punto_celosia, c
 
 
-def resolver_ggh_tier2(target, base_publica, tipo_problema="CVP"):
+def resolver_ggh_tier2(target, base_publica, tipo_problema="CVP", trace=None):
     """
     Resolvedor de GGH Tier 2: LLL (delta=0.99) + Babai Nearest Plane.
     """
     # 1. Reducir base con delta alto para máxima ortogonalidad
     B_red = lll_reduction(base_publica, delta=0.99)
+
+    if trace is not None:
+        trace.update(before_norms=np.linalg.norm(base_publica, axis=1).tolist(), after_norms=np.linalg.norm(B_red, axis=1).tolist())
 
     # Caso SVP: Vector no nulo de menor norma en la base reducida
     if tipo_problema.upper() == "SVP" or np.all(target == 0):
@@ -90,6 +95,6 @@ def resolver_ggh_tier2(target, base_publica, tipo_problema="CVP"):
         return B_red[idx_min].astype(int), B_red
 
     # Caso CVP: Aplicar Babai's Nearest Plane
-    punto_celosia, _ = babai_nearest_plane(target, B_red)
+    punto_celosia, _ = babai_nearest_plane(target, B_red, trace=trace)
 
     return punto_celosia, B_red

@@ -96,7 +96,7 @@ def resolver_ggh_tier2(target, base_publica, tipo_problema="CVP"):
 
 def resolver_lwe_tier2(instancia):
     """
-    Solucionador de LWE adaptado mediante la Inmersión de Kannan
+    Solucionador de LWE mediante un retículo con coordenadas del secreto
     para utilizar el resolvedor GGH/CVP (LLL + Babai) de tu compañero.
     """
     n = instancia['dimension']
@@ -105,7 +105,7 @@ def resolver_lwe_tier2(instancia):
     b = np.array(instancia['B'], dtype=float)
     m_eq = len(A)
     
-    # 1. Construir la base de celosía para LWE -> CVP (Inmersión de Kannan)
+    # 1. Construir la base de celosía para LWE -> CVP (sin embedding de Kannan)
     # Dimensión total: (m_eq + n) x (m_eq + n)
     dim_total = m_eq + n
     B = np.zeros((dim_total, dim_total), dtype=float)

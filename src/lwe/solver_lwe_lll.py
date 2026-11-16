@@ -84,16 +84,20 @@ def solve_mod(A, y, q):
     return s
 
 
-def primal_lll(A, b, q, embedding_factors=(1, 2, 4, 8, 16)):
+def primal_lll(A, b, q, embedding_factors=(1, 2, 4, 8, 16), trace=None):
     """Find a low-error secret candidate, using Kannan embedding."""
     m = len(b)
     # The columns of [A | q*I] generate {A*s + q*z : s,z integer}.
     # HNF returns a square *column* basis; transpose it for row-wise LLL.
     basis = hermite_normal_form(Matrix(A).row_join(q * eye(m))).T
+    if trace is not None:
+        trace.update(generators_shape=[m, len(A[0])+m], basis_shape=list(basis.shape), attempts=[])
     best = None
     for factor in embedding_factors:
         embedded = basis.row_join(zeros(m, 1)).col_join(Matrix([b + [factor]]))
         reduced = embedded.lll(delta=Rational(99, 100))
+        if trace is not None:
+            trace["attempts"].append({"M": factor, "embedding_shape": list(embedded.shape), "short_rows": [[int(x) for x in row] for row in reduced.tolist()]})
         for row in reduced.tolist():
             if abs(row[-1]) != factor:
                 continue

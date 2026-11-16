@@ -82,7 +82,7 @@ def resolver_lwe_tier1(instancia):
             min_ruido_max = ruido_max
             mejor_s = np.array(s_guess)
             
-        # Si el ruido máximo es <= 3, hemos encontrado la clave exacta
+        # Si el ruido máximo es <= 3, aceptamos un candidato de residuo pequeño
         if min_ruido_max <= 3:
             break
             
