@@ -325,7 +325,7 @@ En LWE, se obtiene un secreto candidato y un vector de error de pequeña magnitu
 \begin{enumerate}
     \item \textbf{Unificación mediante reducción de retículos:} Los resultados demuestran que la combinación de LLL ($\delta=0.99$) con la Inmersión de Kannan resuelve en pocos milisegundos tanto instancias de GGH (CVP y SVP modular) como de LWE (Tiers 1 y 2), evitando la explosión combinatoria de la fuerza bruta.
     \item \textbf{Evolución temporal y resistencia frente a ataques cuánticos:} Se constata un crecimiento marcado del tiempo de ejecución al aumentar la dimensión de la celosía y el parámetro $\delta$. Dado que LLL ofrece un factor de aproximación exponencial $O(2^{n/2})$, en los estándares PQC actuales como ML-KEM \cite{nist2024} (Kyber, $n \in [512, 1024]$) se requieren algoritmos de bloques como BKZ con $\beta > 400$, cuyo coste sigue siendo exponencial incluso frente a computadores cuánticos.
-    \item \textbf{Reflexión crítica conjunta:} El estudio confirma que LWE aporta mayores garantías de seguridad que GGH al prescindir de bases trapdoor y sustentar su robustez en reducciones de peor caso sobre retículos $q$-arios.
+    \item \textbf{Reflexión crítica conjunta:} El estudio permite observar las diferencias entre los fundamentos de seguridad de GGH y LWE. Mientras que GGH presenta vulnerabilidades asociadas a la estructura de sus bases y a los ataques de reducción de retículos, LWE dispone de garantías teóricas basadas en reducciones de seguridad desde problemas difíciles sobre retículos. Esto contribuye a explicar su relevancia en el desarrollo de esquemas criptográficos postcuánticos actuales.
 \end{enumerate}
 
 % =========================================================================
