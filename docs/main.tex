@@ -39,7 +39,7 @@
 
 La seguridad de los sistemas criptográficos de clave pública desplegados en la actualidad, como RSA o la criptografía de curva elíptica (ECC), se apoya en la intratabilidad computacional de la factorización de enteros y el logaritmo discreto. Sin embargo, el algoritmo de Shor permite resolver ambos problemas en tiempo polinómico con un computador cuántico lo suficientemente grande, comprometiendo la confidencialidad y la integridad de las comunicaciones actuales. Ante esta tesitura, la criptografía post-cuántica (PQC) nace con la idea de construir primitivas resistentes tanto a ataques clásicos como cuánticos, destacando las familias basadas en retículos (\textit{lattices}) por su eficiencia y sólidas reducciones de seguridad en el peor caso \cite{regev2009}.
 
-La finalidad de este trabajo es analizar, implementar y validar estrategias de criptoanálisis sobre instancias de dificultad creciente correspondientes a los esquemas \textbf{GGH} (\textit{Goldreich-Goldwasser-Halevi}) \cite{ggh1997} y \textbf{LWE} (\textit{Learning With Errors}) \cite{regev2009}. Para ello, se ha desarrollado una arquitectura modular en Python para la ingesta de instancias (\texttt{loader.py}), la resolución por niveles y la verificación geométrica automática.
+La finalidad de este trabajo es analizar, implementar y validar estrategias de criptoanálisis sobre instancias de dificultad creciente correspondientes a los esquemas \textbf{GGH} (\textit{Goldreich-Goldwasser-Halevi}) \cite{ggh1997} y \textbf{LWE} (\textit{Learning With Errors}) \cite{regev2009}.
 
 % =========================================================================
 % 2. ALGORITMOS (30%)
@@ -49,13 +49,13 @@ La finalidad de este trabajo es analizar, implementar y validar estrategias de c
 \subsection{Esquemas PQC Analizados}
 
 \begin{itemize}
-    \item \textbf{Esquema GGH (Cifrado basado en retículos):} Se parte de una base privada $B$ de dimensión $n \times n$ con vectores casi ortogonales y una matriz unimodular $U$ con $\det(U) = \pm 1$ para derivar una base pública muy inclinada $B' = U \cdot B$. Un mensaje $x$ se cifra como $c = x \cdot B' + e = v + e$, donde $e$ es un vector de error acotado. Aquí el criptoanálisis corresponde a resolver el problema del vector más cercano (\textbf{CVP}) o el vector más corto (\textbf{SVP}) sobre el retículo $\mathcal{L}(B')$.
+    \item \textbf{Esquema GGH (Cifrado basado en retículos):} Se parte de una base privada $B$ de dimensión $n \times n$ con vectores casi ortogonales y una matriz unimodular $U$ con $\det(U) = \pm 1$ para derivar una base pública muy inclinada $B' = U \cdot B$. Un mensaje $x$ se cifra como $c = x \cdot B' + e = v + e$, donde $e$ es un vector de error acotado. Aquí el criptoanálisis corresponde a resolver el problema del vector más cercano (\textbf{CVP}) o el vector más corto (\textbf{SVP}) sobre el retículo $\mathcal{L}(B')$ \cite{ggh1997}.
     
     \item \textbf{Esquema LWE (\textit{Learning With Errors}):} Dado un módulo primo $q$, una matriz pública $A$ de dimensiones $m \times n$ y un vector secreto $s$ de dimensión $n$, se publican $m$ ecuaciones lineales perturbadas por un ruido $e$:
     \begin{equation}
         b \equiv A \cdot s + e \pmod{q}
     \end{equation}
-    En las instancias de \textit{rotura} el objetivo es recuperar $s$, mientras que en \textit{criptoanálisis} (esquema de Regev) se utiliza $s$ para descifrar el criptograma $(u, v)$ comprobando si $v - \langle u, s \rangle \pmod{q}$ está más próximo a $0$ (bit $0$) o a $\lfloor q/2 \rfloor$ (bit $1$).
+    En las instancias de \textit{rotura} el objetivo es recuperar $s$, mientras que en \textit{criptoanálisis} (esquema de Regev) se utiliza $s$ para descifrar el criptograma $(u, v)$ comprobando si $v - \langle u, s \rangle \pmod{q}$ está más próximo a $0$ (bit $0$) o a $\lfloor q/2 \rfloor$ (bit $1$) \cite{regev2009}.
 \end{itemize}
 
 \subsection{Algoritmos de Criptoanálisis Implementados}
@@ -70,7 +70,7 @@ La finalidad de este trabajo es analizar, implementar y validar estrategias de c
     \textit{Nearest Plane} mejora la precisión proyectando
     de forma iterativa $c$ desde la última componente hasta
     la primera sobre la base ortogonalizada de Gram-Schmidt
-    $B^*$.
+    $B^*$ \cite{babai1986}.
 
     \item \textbf{Reducción de Bases LLL
     ($\delta \in \{0.75, 0.99\}$):}
@@ -78,7 +78,7 @@ La finalidad de este trabajo es analizar, implementar y validar estrategias de c
     reducción por tamaño ($|\mu_{i,j}| \le 1/2$)
     e intercambios gobernados por la condición de Lovász,
     LLL transforma $B'$ en una base corta y casi
-    ortogonal en tiempo polinómico.
+    ortogonal en tiempo polinómico \cite{lenstra1982}.
     Aumentar el parámetro $\delta$ de $0.75$ a $0.99$
     mejora la calidad de la base reducida a costa
     de un mayor número de iteraciones.
@@ -90,7 +90,7 @@ La finalidad de este trabajo es analizar, implementar y validar estrategias de c
     \textit{Nearest Plane} puede fallar.
     La inmersión de Kannan transforma CVP en dimensión
     $n$ en una instancia de búsqueda de vectores cortos
-    en dimensión $n+1$, construyendo la matriz aumentada:
+    en dimensión $n+1$, construyendo la matriz aumentada \cite{kannan1987}:
 
     \begin{equation}
         B_{\text{Kannan}} =
@@ -126,7 +126,7 @@ La finalidad de este trabajo es analizar, implementar y validar estrategias de c
 
     Por ello, se ha optado por un motor unificado
     basado en el ataque primal mediante reducción
-    de retículos. Inicialmente, se construye una
+    de retículos \cite{albrecht2015}. Inicialmente, se construye una
     base del retículo $q$-ario asociado a LWE
     mediante la Forma Normal de Hermite (HNF):
 
@@ -135,7 +135,7 @@ La finalidad de este trabajo es analizar, implementar y validar estrategias de c
         \left([A \mid qI_m]^T\right)
     \]
 
-    Posteriormente, se aplica la inmersión de Kannan
+    Posteriormente, se aplica la inmersión de Kannan \cite{kannan1987}
     para transformar el problema del vector más
     cercano (CVP) en uno de búsqueda de vectores
     cortos (SVP), construyendo la matriz aumentada
@@ -162,7 +162,7 @@ La finalidad de este trabajo es analizar, implementar y validar estrategias de c
     de la forma $(e,M)$, bajo una convención adecuada
     de signos.
 
-    Al aplicar LLL ($\delta=0.99$) sobre dicha matriz,
+    Al aplicar LLL \cite{lenstra1982} ($\delta=0.99$) sobre dicha matriz,
     se buscan vectores cuya última coordenada sea
     $\pm M$, permitiendo obtener candidatos para
     el vector de errores $e$.
@@ -242,10 +242,16 @@ LWE Tier 2 & Rotura / Cripto (4 inst.) & $n \in [4, 7], q \in \{463, 541\}$ & At
 \label{tab:resultados}
 \end{table}
 
-\subsection{Trazas Breves de Ejecución (Resultados Intermedios)}
+\subsection{Trazas Breves de Ejecución}
 
-Se incluyen dos trazas representativas obtenidas durante la ejecución que muestran los valores intermedios de reducción de bases y recuperación del vector de error:
 
+Se presentan tres trazas representativas correspondientes
+a GGH Tier 2, GGH Tier 3 y LWE Tier 2. Estas muestran
+los vectores recuperados, las métricas de validación y
+los tiempos de ejecución de los algoritmos empleados.
+
+
+\subsubsection*{GGH Tier 2: CVP mediante LLL y Nearest Plane}
 
 \begin{verbatim}
 [GGH Tier 2 - CVP]
@@ -263,21 +269,52 @@ Validacion:
   ||c - v|| = 3.4641
   Estado: VALIDO
 \end{verbatim}
+\subsubsection*{GGH Tier 3: CVP mediante Kannan y LLL}
 
 \begin{verbatim}
 [GGH Tier 3 - CVP]
-Instancia: Tier03T03_Latt.txt
+Fichero: Tier03T03_Latt.txt
 Dimension: 15
-Tiempo: 37.29 ms
+Algoritmo: Kannan + LLL
+Tiempo: 38.43 ms
 
-Vector obtenido:
+Vector recuperado:
 [-75 35 2 -76 116 166 52 -233
  -154 28 -12 101 119 36 102]
 
-Pertenencia al reticulo: True
-Distancia ||c-v||: 2.8284
+Validacion:
+  Pertenencia a B_red: True
+  Distancia ||c-v||: 2.8284
+  Estado: PERTENENCIA VERIFICADA
 \end{verbatim}
+\subsubsection*{LWE Tier 2: Recuperación del secreto mediante LLL}
+\begin{verbatim}
+[LWE Tier 2 - LLL]
+Fichero: Tier2T05_LWE.txt
+Dimension: n=10, m=30, q=541
+Algoritmo: LLL + Embedding
+Tiempo ataque LLL: 0.4703 s
 
+Secreto candidato:
+[196 380 103 296 494 158 58 520 457 502]
+
+Vector de error:
+[-1 0 -3 1 2 -6 6 -6 6 0
+ 3 0 0 -5 -6 -3 5 -5 -6 -2
+ -5 -4 -3 -5 0 -4 -1 -2 -1 -4]
+
+Validacion:
+  |e| max: 6
+  ||e||^2: 441
+  Factor embedding: 1
+  Residuo cifrado: 237
+  Bit probable: 1
+
+Tiempo total: 0.4709 s
+\end{verbatim}
+Las ejecuciones muestran que los algoritmos obtienen vectores pertenecientes a los retículos considerados.
+En los casos de GGH, se calculan las distancias euclídeas entre los vectores recuperados y sus respectivos objetivos.
+En LWE, se obtiene un secreto candidato y un vector de error de pequeña magnitud, con una norma máxima de 6, que permite estimar el bit cifrado.
 
 
 % =========================================================================
@@ -287,7 +324,7 @@ Distancia ||c-v||: 2.8284
 
 \begin{enumerate}
     \item \textbf{Unificación mediante reducción de retículos:} Los resultados demuestran que la combinación de LLL ($\delta=0.99$) con la Inmersión de Kannan resuelve en pocos milisegundos tanto instancias de GGH (CVP y SVP modular) como de LWE (Tiers 1 y 2), evitando la explosión combinatoria de la fuerza bruta.
-    \item \textbf{Evolución temporal y resistencia frente a ataques cuánticos:} Se constata un crecimiento marcado del tiempo de ejecución al aumentar la dimensión de la celosía y el parámetro $\delta$. Dado que LLL ofrece un factor de aproximación exponencial $O(2^{n/2})$, en los estándares PQC actuales como ML-KEM (Kyber, $n \in [512, 1024]$) se requieren algoritmos de bloques como BKZ con $\beta > 400$, cuyo coste sigue siendo exponencial incluso frente a computadores cuánticos.
+    \item \textbf{Evolución temporal y resistencia frente a ataques cuánticos:} Se constata un crecimiento marcado del tiempo de ejecución al aumentar la dimensión de la celosía y el parámetro $\delta$. Dado que LLL ofrece un factor de aproximación exponencial $O(2^{n/2})$, en los estándares PQC actuales como ML-KEM \cite{nist2024} (Kyber, $n \in [512, 1024]$) se requieren algoritmos de bloques como BKZ con $\beta > 400$, cuyo coste sigue siendo exponencial incluso frente a computadores cuánticos.
     \item \textbf{Reflexión crítica conjunta:} El estudio confirma que LWE aporta mayores garantías de seguridad que GGH al prescindir de bases trapdoor y sustentar su robustez en reducciones de peor caso sobre retículos $q$-arios.
 \end{enumerate}
 
@@ -298,6 +335,36 @@ Distancia ||c-v||: 2.8284
 \footnotesize
 \bibitem{ggh1997} O. Goldreich, S. Goldwasser, and S. Halevi, ``Public-key cryptosystems from lattice reduction problems,'' in \textit{Advances in Cryptology -- CRYPTO '97}, Springer, 1997, pp. 112--131.
 \bibitem{regev2009} O. Regev, ``On lattices, learning with errors, random linear codes, and cryptography,'' \textit{Journal of the ACM}, vol. 56, no. 6, pp. 1--40, 2009.
+\bibitem{lenstra1982}
+A. K. Lenstra, H. W. Lenstra, Jr., and L. Lovász,
+``Factoring polynomials with rational coefficients,''
+\textit{Mathematische Annalen},
+vol. 261, pp. 515--534, 1982.
+
+\bibitem{albrecht2015}
+M. R. Albrecht, R. Player, and S. Scott,
+``On the concrete hardness of Learning with Errors,''
+\textit{Journal of Mathematical Cryptology},
+vol. 9, no. 3, pp. 169--203, 2015.
+
+\bibitem{kannan1987}
+R. Kannan,
+``Minkowski's convex body theorem and integer programming,''
+\textit{Mathematics of Operations Research},
+vol. 12, no. 3, pp. 415--440, 1987.
+\bibitem{babai1986}
+L. Babai,
+``On Lovász' lattice reduction and the nearest
+lattice point problem,''
+\textit{Combinatorica},
+vol. 6, no. 1, pp. 1--13, 1986.
+
+\bibitem{nist2024}
+National Institute of Standards and Technology,
+``Module-Lattice-Based Key-Encapsulation
+Mechanism Standard,''
+FIPS 203, 2024.
+doi: 10.6028/NIST.FIPS.203.
 \bibitem{llm_uso} \textbf{Declaración de uso de IA:} Se ha utilizado el modelo de lenguaje Gemini (Google) como asistente técnico mediante consultas iterativas (\textit{prompts} sobre estructuración modular en Python, formulación matricial de la Inmersión de Kannan en GGH/LWE y maquetación en LaTeX). Todo el código generado y los resultados obtenidos fueron auditados, ejecutados y validados matemáticamente por los autores mediante pruebas de pertenencia al retículo y verificación modular.
 \end{thebibliography}
 
