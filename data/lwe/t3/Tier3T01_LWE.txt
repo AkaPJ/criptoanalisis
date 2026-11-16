@@ -1,13 +1,13 @@
 #  ###############  ###############  ###############  ###############   
 #  ###############  ###############  ###############  ###############    
-#  Problema a resolver (rotura / criptoanálisis)
+#  Problema a resolver (rotura / criptoanï¿½lisis)
 rotura
 #  Criptograma (N/A en caso de rotura)
 N/A
 #  ###############  ###############  ###############  ###############   
-#  Dimensión del sistema de ecuaciones
+#  Dimensiï¿½n del sistema de ecuaciones
 7
-# reducción módulo
+# reducciï¿½n mï¿½dulo
 1223
 # coeficientes de las ecuaciones
 {300, 928, 871, 810, 813, 958, 188},
@@ -28,13 +28,13 @@ N/A
 {810, 177, 806, 129, 604, 863, 757},
 {685, 881, 805, 160, 808, 1050, 1048},
 {326, 1196, 766, 867, 967, 831, 119}
-# términos independientes
-1161, 1060, 508, 702, 979, 914, 1107, 717, 743, 838, 220, 682, 657, 662, 404, 963, 176, 1040}
+# tï¿½rminos independientes
+{1161, 1060, 508, 702, 979, 914, 1107, 717, 743, 838, 220, 682, 657, 662, 404, 963, 176, 1040}
 #  ###############  ###############  ###############  ###############   
-#  Solución al problema:
+#  Soluciï¿½n al problema:
 #       vector de secretos en caso de rotura
-#       bit cifrado en caso de criptoanálisis
-#  (los errores considerados pueden derivarse de esta información)
+#       bit cifrado en caso de criptoanï¿½lisis
+#  (los errores considerados pueden derivarse de esta informaciï¿½n)
 N/D
 #  ###############  ###############  ###############  ###############    
 #  ###############  ###############  ###############  ###############   
