@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="29e4151b-7d28-4843-9e32-f0ad3f1e0d7a" name="Changes" comment="tier 1 ggh (no hecho)">
-      <change afterPath="$PROJECT_DIR$/docs/main.tex" afterDir="false" />
+    <list default="true" id="29e4151b-7d28-4843-9e32-f0ad3f1e0d7a" name="Changes" comment="documentación">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ggh/tier1_solver.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ggh/tier1_solver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/main.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/main.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/main.tex" beforeDir="false" afterPath="$PROJECT_DIR$/docs/main.tex" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,21 +47,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.comprobar_tier0.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.comprobar_tier0.executor": "Run",
+    "Python.comprobar_tier0_ggh.executor": "Run",
+    "Python.comprobar_tier1_ggh.executor": "Run",
+    "Python.comprobar_tier1_lwe.executor": "Run",
+    "Python.comprobar_tier2_ggh.executor": "Run",
+    "Python.comprobar_tier2_lwe.executor": "Run",
+    "Python.comprobar_tier3_ggh.executor": "Run",
+    "Python.solver_lwe_lll.executor": "Run",
+    "Python.tier1_solver.executor": "Run",
+    "Python.tier3_solver.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/data" />
@@ -117,7 +126,8 @@
       <workItem from="1792596256945" duration="1083000" />
       <workItem from="1793716734907" duration="8788000" />
       <workItem from="1793952880087" duration="639000" />
-      <workItem from="1794426049140" duration="86000" />
+      <workItem from="1794426049140" duration="7488000" />
+      <workItem from="1794813815046" duration="6189000" />
     </task>
     <task id="LOCAL-00001" summary="tier 0 ggh">
       <option name="closed" value="true" />
@@ -135,7 +145,79 @@
       <option name="project" value="LOCAL" />
       <updated>1793726200360</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="añadido .tex para memoria">
+      <option name="closed" value="true" />
+      <created>1794426155957</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1794426155957</updated>
+    </task>
+    <task id="LOCAL-00004" summary="añadido .tex para memoria">
+      <option name="closed" value="true" />
+      <created>1794426169926</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1794426169926</updated>
+    </task>
+    <task id="LOCAL-00005" summary="ggh tier1">
+      <option name="closed" value="true" />
+      <created>1794429383678</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1794429383678</updated>
+    </task>
+    <task id="LOCAL-00006" summary="corregidos errores + tier 2">
+      <option name="closed" value="true" />
+      <created>1794430612505</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1794430612505</updated>
+    </task>
+    <task id="LOCAL-00007" summary="añadida norma a tier 0">
+      <option name="closed" value="true" />
+      <created>1794469663713</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1794469663713</updated>
+    </task>
+    <task id="LOCAL-00008" summary="corrector tier 1">
+      <option name="closed" value="true" />
+      <created>1794470248328</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1794470248328</updated>
+    </task>
+    <task id="LOCAL-00009" summary="ggh tier 3">
+      <option name="closed" value="true" />
+      <created>1794472605638</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1794472605638</updated>
+    </task>
+    <task id="LOCAL-00010" summary="añadida mejora el el comprobador tier1 lwe autoverificación">
+      <option name="closed" value="true" />
+      <created>1794814216243</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1794814216243</updated>
+    </task>
+    <task id="LOCAL-00011" summary="documentación">
+      <option name="closed" value="true" />
+      <created>1794842477341</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1794842477341</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -147,9 +229,26 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="tier 0 ggh" />
     <MESSAGE value="tier 1 ggh (no hecho)" />
-    <option name="LAST_COMMIT_MESSAGE" value="tier 1 ggh (no hecho)" />
+    <MESSAGE value="añadido .tex para memoria" />
+    <MESSAGE value="ggh tier1" />
+    <MESSAGE value="corregidos errores + tier 2" />
+    <MESSAGE value="añadida norma a tier 0" />
+    <MESSAGE value="corrector tier 1" />
+    <MESSAGE value="ggh tier 3" />
+    <MESSAGE value="añadida mejora el el comprobador tier1 lwe autoverificación" />
+    <MESSAGE value="documentación" />
+    <option name="LAST_COMMIT_MESSAGE" value="documentación" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/criptoanalisis$comprobar_tier2_lwe.coverage" NAME="comprobar_tier2_lwe Coverage Results" MODIFIED="1794840578385" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/criptoanalisis$solver_lwe_lll.coverage" NAME="solver_lwe_lll Coverage Results" MODIFIED="1794840864091" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/lwe" />
     <SUITE FILE_PATH="coverage/criptoanalisis$comprobar_tier0.coverage" NAME="comprobar_tier0 Coverage Results" MODIFIED="1793720688851" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/criptoanalisis$tier1_solver.coverage" NAME="tier1_solver Coverage Results" MODIFIED="1794469713342" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ggh" />
+    <SUITE FILE_PATH="coverage/criptoanalisis$comprobar_tier2_ggh.coverage" NAME="comprobar_tier2_ggh Coverage Results" MODIFIED="1794843497796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/criptoanalisis$comprobar_tier1_ggh.coverage" NAME="comprobar_tier1_ggh Coverage Results" MODIFIED="1794843387026" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/criptoanalisis$comprobar_tier0_ggh.coverage" NAME="comprobar_tier0_ggh Coverage Results" MODIFIED="1794813872380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/criptoanalisis$tier3_solver.coverage" NAME="tier3_solver Coverage Results" MODIFIED="1794472583780" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ggh" />
+    <SUITE FILE_PATH="coverage/criptoanalisis$comprobar_tier3_ggh.coverage" NAME="comprobar_tier3_ggh Coverage Results" MODIFIED="1794843576751" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/criptoanalisis$comprobar_tier1_lwe.coverage" NAME="comprobar_tier1_lwe Coverage Results" MODIFIED="1794840572614" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

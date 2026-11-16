@@ -60,23 +60,134 @@ La finalidad de este trabajo es analizar, implementar y validar estrategias de c
 
 \subsection{Algoritmos de Criptoanálisis Implementados}
 
+
 \begin{enumerate}
-    \item \textbf{Redondeo de Babai vs. \textit{Babai's Nearest Plane}:} El redondeo directo ($v = \lfloor c \cdot (B')^{-1} \rceil B'$) solo funciona si $B'$ es casi ortogonal. \textit{Nearest Plane} mejora la precisión proyectando de forma iterativa $c$ desde la última componente hasta la primera sobre la base ortogonalizada de Gram-Schmidt $B^*$.
-    
-    \item \textbf{Reducción de Bases LLL ($\delta \in \{0.75, 0.99\}$):} Mediante ortogonalización de Gram-Schmidt, reducción por tamaño ($|\mu_{i,j}| \le 1/2$) e intercambios gobernados por la condición de Lovász, LLL transforma $B'$ en una base corta y casi ortogonal en tiempo polinómico. Aumentar el parámetro $\delta$ de $0.75$ a $0.99$ mejora la calidad de la base reducida a costa de un mayor número de iteraciones.
-    
-    \item \textbf{Inmersión de Kannan (\textit{Kannan's Embedding}) y Retículos $q$-arios:} Si la base pública está severamente mal condicionada, como ocurre en el Tier 3 de GGH, \textit{Nearest Plane} falla. La inmersión de Kannan reduce CVP en dimensión $n$ a SVP en dimensión $n+1$ construyendo la matriz aumentada:
+
+    \item \textbf{Redondeo de Babai vs. \textit{Babai's Nearest Plane}:}
+    El redondeo directo
+    ($v = \lfloor c \cdot (B')^{-1} \rceil B'$)
+    solo funciona de forma fiable si $B'$ es casi ortogonal.
+    \textit{Nearest Plane} mejora la precisión proyectando
+    de forma iterativa $c$ desde la última componente hasta
+    la primera sobre la base ortogonalizada de Gram-Schmidt
+    $B^*$.
+
+    \item \textbf{Reducción de Bases LLL
+    ($\delta \in \{0.75, 0.99\}$):}
+    Mediante ortogonalización de Gram-Schmidt,
+    reducción por tamaño ($|\mu_{i,j}| \le 1/2$)
+    e intercambios gobernados por la condición de Lovász,
+    LLL transforma $B'$ en una base corta y casi
+    ortogonal en tiempo polinómico.
+    Aumentar el parámetro $\delta$ de $0.75$ a $0.99$
+    mejora la calidad de la base reducida a costa
+    de un mayor número de iteraciones.
+
+    \item \textbf{Inmersión de Kannan
+    (\textit{Kannan's Embedding}) y Retículos $q$-arios:}
+    Si la base pública está severamente mal condicionada,
+    como ocurre en el Tier 3 de GGH,
+    \textit{Nearest Plane} puede fallar.
+    La inmersión de Kannan transforma CVP en dimensión
+    $n$ en una instancia de búsqueda de vectores cortos
+    en dimensión $n+1$, construyendo la matriz aumentada:
+
     \begin{equation}
-        B_{\text{Kannan}} = \begin{pmatrix} B_{\text{red}} & \mathbf{0} \\ -c & M \end{pmatrix}, \qquad B_{\text{aug}} = \begin{pmatrix} B' \\ q I_n \end{pmatrix}
+        B_{\text{Kannan}} =
+        \begin{pmatrix}
+            B_{\text{red}} & \mathbf{0} \\
+            -c & M
+        \end{pmatrix},
+        \qquad
+        B_{\text{aug}} =
+        \begin{pmatrix}
+            B' \\
+            q I_n
+        \end{pmatrix}
     \end{equation}
-    Una vez reducida $B_{\text{Kannan}}$ con LLL, el vector corto $(e, \pm M)$ aparece en las primeras filas, pudiendo recuperar exactamente $v = c + e$. Para retículos modulares, se apila $B_{\text{aug}}$, permitiendo que LLL colapse dependencias lineales y halle vectores cortos módulo $q$.
-    
-    \item \textbf{Búsqueda Acotada en Error y Ataque Primal Unificado (LLL + Kannan):} En LWE Tier 1, una dimensión reducida permitiría una búsqueda exhaustiva acotada sobre el espacio de errores $[-5, 5]$ combinada con eliminación gaussiana en $\mathbb{Z}_q$; sin embargo, dicho enfoque escala exponencialmente ($11^n$) y resulta inviable en Tier 2. Por ello, se ha optado por un motor unificado basado en el \textbf{Ataque Primal} sobre la celosía $q$-aria aumentada de dimensión $(m + n + 1) \times (m + n + 1)$:
-    \begin{equation}
-        B_{\text{LWE}} = \begin{pmatrix} q I_m & \mathbf{0} & \mathbf{0} \\ A^T & I_n & \mathbf{0} \\ b^T & \mathbf{0} & 1 \end{pmatrix}
-    \end{equation}
-    Como existe un vector entero $k$ tal que $b - A \cdot s + q \cdot k = e$, la combinación entera $(k, -s, 1) \cdot B_{\text{LWE}}$ genera el vector corto $(e, -s, 1)$. Al aplicar LLL ($\delta = 0.99$) sobre $B_{\text{LWE}}$, la fila cuya última coordenada es $\pm 1$ revela simultáneamente el error $e$ y el secreto $s$ en tiempo polinómico tanto en Tier 1 como en Tier 2.
+
+    Una vez reducida $B_{\text{Kannan}}$ con LLL,
+    se buscan vectores cortos de la forma
+    $(e, \pm M)$, que permiten recuperar
+    $v = c + e$ según la convención de signos utilizada.
+    Para retículos modulares, se apila
+    $B_{\text{aug}}$, permitiendo que LLL
+    encuentre vectores cortos del retículo
+    generado módulo $q$.
+
+    \item \textbf{Búsqueda Acotada en Error y Ataque
+    Primal Unificado (LLL + Kannan):}
+    En LWE Tier 1, una dimensión reducida permitiría
+    una búsqueda exhaustiva acotada sobre el espacio
+    de errores $[-5,5]^m$ combinada con eliminación
+    gaussiana en $\mathbb{Z}_q$; sin embargo,
+    dicho enfoque escala exponencialmente ($11^m$)
+    y resulta inviable para dimensiones mayores.
+
+    Por ello, se ha optado por un motor unificado
+    basado en el ataque primal mediante reducción
+    de retículos. Inicialmente, se construye una
+    base del retículo $q$-ario asociado a LWE
+    mediante la Forma Normal de Hermite (HNF):
+
+    \[
+        B = \operatorname{HNF}
+        \left([A \mid qI_m]^T\right)
+    \]
+
+    Posteriormente, se aplica la inmersión de Kannan
+    para transformar el problema del vector más
+    cercano (CVP) en uno de búsqueda de vectores
+    cortos (SVP), construyendo la matriz aumentada
+    de dimensión $(m+1)\times(m+1)$:
+
+    \[
+        B_{\mathrm{LWE}} =
+        \begin{pmatrix}
+            B & \mathbf{0} \\
+            b^T & M
+        \end{pmatrix}
+    \]
+
+    donde $M$ representa el factor de embedding,
+    para el que se prueban diferentes valores.
+
+    Dado que existe un vector entero $k$ tal que
+
+    \[
+        b-As+qk=e,
+    \]
+
+    el retículo aumentado contiene un vector corto
+    de la forma $(e,M)$, bajo una convención adecuada
+    de signos.
+
+    Al aplicar LLL ($\delta=0.99$) sobre dicha matriz,
+    se buscan vectores cuya última coordenada sea
+    $\pm M$, permitiendo obtener candidatos para
+    el vector de errores $e$.
+
+    A partir del error encontrado, se recupera
+    el vector secreto $s$ mediante eliminación
+    gaussiana modular, resolviendo:
+
+    \[
+        As \equiv b-e \pmod q
+    \]
+
+    Finalmente, se verifica que el secreto recuperado
+    satisface las ecuaciones originales y se evalúa
+    la norma del error para seleccionar un candidato
+    válido.
+
+    Este procedimiento permite resolver las instancias
+    de LWE de los primeros niveles sin conocer
+    previamente la distribución exacta de los errores,
+    aunque no garantiza la recuperación del secreto
+    para cualquier instancia.
+
 \end{enumerate}
+
 
 % =========================================================================
 % 3. RESOLUCIÓN DE TAREAS (40%)
@@ -85,24 +196,48 @@ La finalidad de este trabajo es analizar, implementar y validar estrategias de c
 
 \subsection{Metodología de Autoverificación y Resultados Experimentales}
 
-Para validar las instancias cuya solución oficial consta como \texttt{N/D}, se implementó una comprobación matemática exacta: en GGH se verifica que $v \cdot (B_{\text{red}})^{-1} \in \mathbb{Z}^n$ (error $<10^{-4}$) y la minimalidad de $\|c - v\|$; en LWE se comprueba que el residuo centrado $e = (b - A \cdot s) \bmod q$ cumple $\|e\|_\infty \le 5$.
+Para validar las instancias cuya solución oficial consta como \texttt{N/D}, se implementó una comprobación matemática exacta: en GGH se verifica que $v \cdot (B_{\text{red}})^{-1} \in \mathbb{Z}^n$ (error $<10^{-4}$) y la minimalidad de $\|c - v\|$; en LWE se comprueba que el residuo centrado $e = (b - A \cdot s) \bmod q$ cumple $\|e\|_\infty \le 6$.
 
-\begin{table}[h!]
+\begin{table}[htbp]
 \centering
-\footnotesize
-\begin{tabularx}{\textwidth}{l l c l r r l}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.3}
+
+\begin{tabularx}{\textwidth}{
+    l
+    l
+    >{\centering\arraybackslash}X
+    X
+    r
+    r
+    X
+}
 \toprule
-\textbf{Esquema / Nivel} & \textbf{Tipo} & \textbf{Talla / Mod} & \textbf{Algoritmo} & \textbf{Tiempo (ms)} & \textbf{Norma ($\|e\|$ / $\|v\|$)} & \textbf{Estado} \\
+\textbf{Esquema / Nivel} &
+\textbf{Tipo} &
+\textbf{Talla / Mod} &
+\textbf{Algoritmo} &
+\textbf{Tiempo (ms)} &
+\textbf{Norma} &
+\textbf{Estado} \\
 \midrule
-GGH Tier 1 & CVP / SVP & $n \le 8$ / N/A & LLL ($\delta=0.75$) + Babai & \texttt{--} & \texttt{--} & Válido ($v \in \mathcal{L}$) \\
-GGH Tier 2 & CVP / SVP & $n \le 10$ / N/A & LLL ($\delta=0.99$) + Nearest Plane & \texttt{--} & \texttt{16.0000} & Válido ($v \in \mathcal{L}$) \\
-GGH Tier 3 (a) & CVP & $n = 15$ / N/A & LLL ($\delta=0.99$) + Kannan & \texttt{--} & \texttt{--} & Válido ($v \in \mathcal{L}$) \\
-GGH Tier 3 (b) & SVP & $n = 5$ / $q=541$ & LLL Modular ($B_{\text{aug}}$) & \texttt{--} & \texttt{--} & Válido ($v \in \mathcal{L}_q$) \\
+
+GGH Tier 1 & CVP / SVP (7 inst.) & $n \in [2, 6]$ & LLL ($\delta=0.75$) + Babai & 0.38 & 8.1314 & 7/7 Válido ($v \in \mathcal{L}$) \\
+
+GGH Tier 2 & CVP / SVP (5 inst.) & $n \in [4, 7]$ & LLL ($\delta=0.99$) + Nearest Plane & 1.62 & 12.9405 & 5/5 Válido ($v \in \mathcal{L}$) \\
+
+GGH Tier 3 (a) & CVP / SVP (2 inst.) & $n = 15$ / N/A & LLL ($\delta=0.99$) + Kannan & 34.94 & 9.3199 & 2/2 Válido ($v \in \mathcal{L}$) \\
+GGH Tier 3 (b) & CVP / SVP (3 inst.) & $n \in \{2, 5\}$ / $q \le 1987$ & LLL Modular ($B_{\text{aug}}$) & 7.88 & 0.3333 & 3/3 Válido ($v \in \mathcal{L}_q$) \\
+
 \midrule
-LWE Tier 1 & Rotura / Cripto & $n=3, m=12, q=281$ & Ataque Primal (LLL + Kannan) & \texttt{--} & \texttt{--} & Válido ($\|e\|_\infty \le 5$) \\
-LWE Tier 2 & Rotura / Cripto & $n \ge 5$, $q$ primo & Ataque Primal (LLL + Kannan) & \texttt{--} & \texttt{--} & Válido ($\|e\|_\infty \le 5$) \\
+
+LWE Tier 1 & Rotura / Cripto (5 inst.) & $n \in [3, 4], q \in \{281, 379\}$ & Ataque Primal LLL ($\delta=0.99$) + Kannan & 17.50 & 7.5556 & 5/5 Válido ($\|e\|_\infty \le 4$) \\
+LWE Tier 2 & Rotura / Cripto (4 inst.) & $n \in [4, 7], q \in \{463, 541\}$ & Ataque Primal LLL ($\delta=0.99$) + Kannan & 81.18 & 14.6924 & 4/4 Válido ($\|e\|_\infty \le 6$) \\
+
 \bottomrule
 \end{tabularx}
+
 \caption{Métricas de ejecución, evolución temporal y validación matemática de las tareas resueltas.}
 \label{tab:resultados}
 \end{table}
